@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBookLoanService, BookLoanService>();
 builder.Services.AddScoped<ApplicationDbContext>();
 builder.WebHost.UseUrls("http://localhost:5001");
 

@@ -43,10 +43,10 @@ public class BookService(ApplicationDbContext context):IBookService
             await using var conn = context.GetConnection();
             conn.Open();
             string query="insert into books(Title,PublishedYear,Genre,AuthorId) values(@Title,@PublishedYear,@Genre,@AuthorId)";
-            var result = await conn.QueryFirstOrDefaultAsync(query,book);
+            var result = await conn.ExecuteAsync(query,book);
             
-            return result==null? new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error!")
-                : new Response<string>(HttpStatusCode.OK,"Book Added Successfully!",result);
+            return result==0 ? new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error!")
+                : new Response<string>(HttpStatusCode.OK,"Book Added Successfully!");
 
         }
         catch (Exception e)
@@ -63,9 +63,9 @@ public class BookService(ApplicationDbContext context):IBookService
             await using var conn = context.GetConnection();
             conn.Open();
             string query="update books set Title=@Title,PublishedYear=@PublishedYear where id = @id";
-            var result = await conn.QueryFirstOrDefaultAsync(query,book);
+            var result = await conn.ExecuteAsync(query,book);
             return result==null? new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error!")
-                :  new Response<string>(HttpStatusCode.OK,"Book Updated Successfully!",result);
+                :  new Response<string>(HttpStatusCode.OK,"Book Updated Successfully!");
         }
         catch (Exception e)
         {
@@ -81,9 +81,9 @@ public class BookService(ApplicationDbContext context):IBookService
             await using var conn = context.GetConnection();
             conn.Open();
             string query = "delete from books where id = @id";
-            var result = await conn.QueryFirstOrDefaultAsync(query,id);
+            var result = await conn.ExecuteAsync(query,id);
             return result==null? new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error!")
-                : new Response<string>(HttpStatusCode.OK,"Book Deleted Successfully!",result);
+                : new Response<string>(HttpStatusCode.OK,"Book Deleted Successfully!");
         }
         catch (Exception e)
         {

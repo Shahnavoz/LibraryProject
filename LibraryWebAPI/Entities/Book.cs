@@ -6,5 +6,5 @@ public class Book
     public string Title { get; set; }
     public int PublishedYear { get; set; }
     public string Genre { get; set; }
-    public string AuthorId { get; set; }
+    public int AuthorId { get; set; }
 }

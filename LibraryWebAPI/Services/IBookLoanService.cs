@@ -5,7 +5,7 @@ namespace LibraryWebAPI.Services;
 
 public interface IBookLoanService
 {
-    Task<List<BookLoan>> GetAllBooksAsync();
+    Task<List<BookLoan>> GetAllBookLoansAsync();
     Task<Response<BookLoan>> GetBookLoanByIdAsync(int id);
     Task<Response<string>> AddBookLoanAsync(BookLoan bookLoan);
     Task<Response<string>> UpdateBookLoanAsync(BookLoan bookLoan);

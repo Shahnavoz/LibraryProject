@@ -43,11 +43,12 @@ public class UserService(ApplicationDbContext context):IUserService
         try
         {
             await using var conn = context.GetConnection();
-            conn.Open();
-            string query="insert into users (FullName,Email,RegisteredAt) values (@FullName,@Email,@RegisteredAt)";
+            await conn.OpenAsync();
+            string query="insert into users (FullName,Email) values (@FullName,@Email)";
             var result = await conn.ExecuteAsync(query,user);
-            return result > 0 ? new Response<string>(HttpStatusCode.OK,"User added")
-                : new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error!");
+            return result == 0 ? new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error!")
+                    :new Response<string>(HttpStatusCode.OK,"User added")
+                ;
         }
         catch (Exception e)
         {
